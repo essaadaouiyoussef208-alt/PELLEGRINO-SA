@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pallegrino SA – Bar di Lusso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-main: #0a0a0a;
+      --bg-alt: #111111;
+      --gold: #d4af37;
+      --gold-soft: #e0c66a;
+      --text-main: #f5f5f5;
+      --text-muted: #b3b3b3;
+      --accent-dark: #2f2f2f;
+      --error: #ff4d4d;
+      --success: #4caf50;
+      --transition-fast: 0.2s ease;
+      --transition-med: 0.35s ease;
+      --radius-soft: 10px;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.6);
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Georgia", "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #1b1b1b 0, #050505 55%, #000 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Layout base */
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 80px 0;
+      position: relative;
+    }
+
+    section:nth-of-type(odd) {
+      background: rgba(10, 10, 10, 0.9);
+    }
+
+    section:nth-of-type(even) {
+      background: rgba(5, 5, 5, 0.95);
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 2.4rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+
+    /* Header */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.9),
+        rgba(0, 0, 0, 0.7),
+        transparent
+      );
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 30% 20%, #f5f5f5 0, #d4af37 40%, #5a4515 100%);
+      box-shadow: 0 0 18px rgba(212, 175, 55, 0.6);
+      font-family: var(--font-serif);
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #111;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .logo-name {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .logo-tagline {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-soft));
+      transition: width var(--transition-med);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      background: rgba(0, 0, 0, 0.7);
+      font-size: 0.75rem;
+    }
+
+    .lang-switcher button {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 999px;
+      transition: background var(--transition-fast), color var(--transition-fast);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .lang-switcher button.active {
+      background: linear-gradient(90deg, var(--gold), var(--gold-soft));
+      color: #111;
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      width: 20px;
+      height: 2px;
+      background: var(--text-main);
+      border-radius: 999px;
+    }
+
+    @media (max-width: 800px) {
+      .nav-links {
+        position: fixed;
+        inset: 60px 16px auto 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        border-radius: 14px;
+        background: rgba(5, 5, 5, 0.98);
+        box-shadow: var(--shadow-soft);
+        transform: translateY(-20px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--transition-med), transform var(--transition-med);
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+    }
+
+    /* Hero */
+
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(212, 175, 55, 0.12) 0, transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(212, 175, 55, 0.18) 0, transparent 60%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-kicker {
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.6rem, 4vw, 3.4rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(90deg, var(--gold), var(--gold-soft));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: 26px;
+      font-size: 0.95rem;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+
+    .badge {
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 10px 22px;
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
+      color: #111;
+      box-shadow: 0 12px 30px rgba(212, 175, 55, 0.45);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(212, 175, 55, 0.6);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+    }
+
+    .btn-outline:hover {
+      background: rgba(212, 175, 55, 0.1);
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-card {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 24px;
+      padding: 18px;
+      background: radial-gradient(circle at top, #2b2210 0, #0a0a0a 55%, #000 100%);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.12) 0, transparent 55%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .hero-card-title {
+      font-family: var(--font-serif);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    .hero-card-pill {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .hero-card-main {
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .hero-card-main::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 40%);
+    }
+
+    .hero-card-main-inner {
+      height: 200px;
+      background-image: url("https://images.pexels.com/photos/5531523/pexels-photo-5531523.jpeg?auto=compress&cs=tinysrgb&w=1200");
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.02);
+    }
+
+    .hero-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-card-footer span strong {
+      color: var(--gold-soft);
+    }
+
+    .hero-floating-badge {
+      position: absolute;
+      right: -10px;
+      bottom: -10px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.6);
+      background: radial-gradient(circle at 30% 20%, #f5f5f5 0, #d4af37 40%, #5a4515 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #111;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+      transform: translate(-10px, -10px);
+    }
+
+    /* Chi siamo */
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .text-muted {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .highlight {
+      color: var(--gold-soft);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .card {
+      border-radius: var(--radius-soft);
+      padding: 18px;
+      background: linear-gradient(145deg, #111, #050505);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      color: var(--text-muted);
+    }
+
+    .card-main {
+      font-size: 0.95rem;
+    }
+
+    /* Servizi */
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .service-card {
+      border-radius: var(--radius-soft);
+      padding: 18px;
+      background: radial-gradient(circle at top, #1a1a1a 0, #050505 60%);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 0 0, rgba(212, 175, 55, 0.12) 0, transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-med);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .service-title {
+      font-size: 1rem;
+      margin-bottom: 6px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .service-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .service-tag {
+      font-size: 0.75rem;
+      color: var(--gold-soft);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    /* Galleria */
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      transform: translateY(0);
+      transition: transform var(--transition-med), box-shadow var(--transition-med), filter var(--transition-med);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 40%);
+      opacity: 0;
+      transition: opacity var(--transition-med);
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+      filter: saturate(1.1);
+    }
+
+    .gallery-item:hover::after {
+      opacity: 1;
+    }
+
+    .gallery-label {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #f5f5f5;
+    }
+
+    /* Sedi + mappa */
+
+    .locations-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .locations-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .map-wrapper {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: var(--shadow-soft);
+      min-height: 260px;
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .location-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .location-item {
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #111, #050505);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .location-name {
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .location-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .location-tag {
+      font-size: 0.75rem;
+      color: var(--gold-soft);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    /* Contatti + prenotazioni */
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    input,
+    textarea,
+    select {
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.7);
+      color: var(--text-main);
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+
+    textarea {
+      border-radius: 14px;
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: rgba(212, 175, 55, 0.7);
+      box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.4);
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .form-row > * {
+      flex: 1;
+    }
+
+    .form-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .status-message {
+      font-size: 0.8rem;
+      margin-top: 6px;
+    }
+
+    .status-success {
+      color: var(--success);
+    }
+
+    .status-error {
+      color: var(--error);
+    }
+
+    /* Footer */
+
+    footer {
+      padding: 30px 0 20px;
+      background: #050505;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-inner span.highlight {
+      color: var(--gold-soft);
+    }
+
+    /* Animazioni di entrata */
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav class="nav">
+      <div class="logo">
+        <div class="logo-mark">PS</div>
+        <div class="logo-text">
+          <div class="logo-name">Pallegrino SA</div>
+          <div class="logo-tagline" data-i18n="logo_tagline">
+            Bar · Cocktail · Lounge
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#home" class="active" data-i18n="nav_home">Home</a>
+        <a href="#about" data-i18n="nav_about">Chi siamo</a>
+        <a href="#services" data-i18n="nav_services">Servizi</a>
+        <a href="#gallery" data-i18n="nav_gallery">Galleria</a>
+        <a href="#locations" data-i18n="nav_locations">Sedi</a>
+        <a href="#contact" data-i18n="nav_contact">Contatti</a>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="lang-switcher">
+          <button class="active" data-lang="it">IT</button>
+          <button data-lang="de">DE</button>
+          <button data-lang="fr">FR</button>
+        </div>
+        <div class="nav-toggle" id="navToggle">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO / HOME -->
+  <section id="home" class="hero">
+    <div class="container hero-grid fade-in">
+      <div>
+        <div class="hero-kicker" data-i18n="hero_kicker">
+          Bar di lusso · Biasca
+        </div>
+        <h1 class="hero-title">
+          <span>Pallegrino SA</span><br />
+          <span data-i18n="hero_title_line2">L’arte del bar contemporaneo</span>
+        </h1>
+        <p class="hero-subtitle" data-i18n="hero_subtitle">
+          Un bar di fascia alta dove cocktail d’autore, atmosfera elegante e servizio impeccabile
+          creano un’esperienza pensata per chi cerca status, gusto e dettagli di lusso.
+        </p>
+
+        <div class="hero-badges">
+          <div class="badge" data-i18n="hero_badge_1">Cocktail Signature</div>
+          <div class="badge" data-i18n="hero_badge_2">Selezione Premium</div>
+          <div class="badge" data-i18n="hero_badge_3">Ambiente Esclusivo</div>
+        </div>
+
+        <div class="hero-cta">
+          <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" data-i18n="hero_cta_primary">
+            Prenota un tavolo
+          </button>
+          <button class="btn btn-outline" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})" data-i18n="hero_cta_secondary">
+            Scopri l’atmosfera
+          </button>
+        </div>
+
+        <div class="hero-note" data-i18n="hero_note">
+          Aperto tutti i giorni · Ideale per aperitivi, serate esclusive ed eventi privati.
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-card-title" data-i18n="hero_card_title">
+              Cocktail d’autore
+            </div>
+            <div class="hero-card-pill" data-i18n="hero_card_pill">
+              Pallegrino SA · Lounge
+            </div>
+          </div>
+          <div class="hero-card-main">
+            <div class="hero-card-main-inner"></div>
+          </div>
+          <div class="hero-card-footer">
+            <span data-i18n="hero_card_footer_1">
+              Selezione premium · <strong>Champagne &amp; Spirits</strong>
+            </span>
+          </div>
+        </div>
+        <div class="hero-floating-badge" data-i18n="hero_badge_round">
+          Bar · Lusso
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHI SIAMO -->
+  <section id="about">
+    <div class="container two-col fade-in">
+      <div>
+        <h2 class="section-title" data-i18n="about_title">Chi siamo</h2>
+        <div class="section-subtitle" data-i18n="about_subtitle">
+          Identità · Visione · Esperienza
+        </div>
+        <p class="text-muted" data-i18n="about_text_1">
+          Pallegrino SA è un bar di lusso pensato per chi vive il momento come un rituale.
+          Un ambiente moderno, elegante e curato nei minimi dettagli, dove ogni luce, ogni
+          materiale e ogni nota musicale sono studiati per trasmettere status e raffinatezza.
+        </p>
+        <br />
+        <p class="text-muted" data-i18n="about_text_2">
+          La nostra filosofia unisce l’arte della mixology contemporanea a un servizio
+          discreto e impeccabile. Che si tratti di un aperitivo, di un incontro di lavoro
+          o di una serata speciale, il nostro obiettivo è uno solo: far sentire ogni ospite
+          al centro di un’esperienza esclusiva.
+        </p>
+
+        <div class="pill-row">
+          <div class="pill" data-i18n="about_pill_1">Mixology contemporanea</div>
+          <div class="pill" data-i18n="about_pill_2">Selezione di champagne</div>
+          <div class="pill" data-i18n="about_pill_3">Servizio su misura</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" data-i18n="about_card_title">
+          Dettagli che fanno la differenza
+        </div>
+        <div class="card-main">
+          <p class="text-muted" data-i18n="about_card_text_1">
+            Materiali pregiati, palette cromatica nero–oro, luci soffuse e una selezione musicale
+            curata creano un ambiente che comunica immediatamente lusso e riservatezza.
+          </p>
+          <br />
+          <p class="text-muted" data-i18n="about_card_text_2">
+            Ogni elemento è pensato per valorizzare l’immagine del tuo brand personale:
+            Pallegrino SA è il luogo ideale per incontrare clienti, partner o persone importanti
+            in un contesto che parla di stile, successo e attenzione al dettaglio.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIZI -->
+  <section id="services">
+    <div class="container fade-in">
+      <h2 class="section-title" data-i18n="services_title">Servizi</h2>
+      <div class="section-subtitle" data-i18n="services_subtitle">
+        Ospitalità · Esperienza · Personalizzazione
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🍸</div>
+          <div class="service-title" data-i18n="service_1_title">Cocktail d’autore</div>
+          <div class="service-text" data-i18n="service_1_text">
+            Una carta cocktail firmata dai nostri bartender, con creazioni originali,
+            twist sui grandi classici e pairing studiati con la nostra selezione food.
+          </div>
+          <div class="service-tag" data-i18n="service_1_tag">Signature Experience</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🥂</div>
+          <div class="service-title" data-i18n="service_2_title">Champagne &amp; Spirits</div>
+          <div class="service-text" data-i18n="service_2_text">
+            Etichette selezionate di champagne, distillati premium e bottiglie rare,
+            perfette per celebrazioni, incontri importanti o momenti da ricordare.
+          </div>
+          <div class="service-tag" data-i18n="service_2_tag">Premium Selection</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🎩</div>
+          <div class="service-title" data-i18n="service_3_title">Eventi privati</div>
+          <div class="service-text" data-i18n="service_3_text">
+            Possibilità di riservare aree dedicate o l’intero locale per eventi aziendali,
+            presentazioni, feste private e serate su invito.
+          </div>
+          <div class="service-tag" data-i18n="service_3_tag">Private Lounge</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERIA -->
+  <section id="gallery">
+    <div class="container fade-in">
+      <h2 class="section-title" data-i18n="gallery_title">Galleria</h2>
+      <div class="section-subtitle" data-i18n="gallery_subtitle">
+        Atmosfera · Dettagli · Momenti
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://images.pexels.com/photos/5531523/pexels-photo-5531523.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Bar di lusso" />
+          <div class="gallery-label" data-i18n="gallery_label_1">Lounge principale</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.pexels.com/photos/5531540/pexels-photo-5531540.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Cocktail" />
+          <div class="gallery-label" data-i18n="gallery_label_2">Cocktail d’autore</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.pexels.com/photos/5531541/pexels-photo-5531541.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Dettagli" />
+          <div class="gallery-label" data-i18n="gallery_label_3">Dettagli di luce</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.pexels.com/photos/5531542/pexels-photo-5531542.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Champagne" />
+          <div class="gallery-label" data-i18n="gallery_label_4">Champagne &amp; Spirits</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEDI + MAPPA -->
+  <section id="locations">
+    <div class="container locations-grid fade-in">
+      <div>
+        <h2 class="section-title" data-i18n="locations_title">Sedi</h2>
+        <div class="section-subtitle" data-i18n="locations_subtitle">
+          Dove trovarci
+        </div>
+
+        <div class="location-list">
+          <div class="location-item">
+            <div class="location-name" data-i18n="location_1_name">
+              Pallegrino SA · Sede principale
+            </div>
+            <div class="location-meta" data-i18n="location_1_meta">
+              Biasca, Ticino · Svizzera
+            </div>
+            <div class="location-tag" data-i18n="location_1_tag">
+              Flagship Bar
+            </div>
+          </div>
+
+          <div class="location-item">
+            <div class="location-name" data-i18n="location_2_name">
+              Pallegrino SA · Lounge Executive
+            </div>
+            <div class="location-meta" data-i18n="location_2_meta">
+              Sede dedicata a eventi privati e corporate.
+            </div>
+            <div class="location-tag" data-i18n="location_2_tag">
+              Private &amp; Corporate
+            </div>
+          </div>
+
+          <p class="text-muted" style="margin-top:10px;" data-i18n="locations_note">
+            Per informazioni su nuove aperture o sedi partner, contattaci tramite il form
+            o prenota un appuntamento dedicato.
+          </p>
+        </div>
+      </div>
+
+      <div class="map-wrapper">
+        <!-- Sostituisci l’iframe con quello reale di Google Maps quando avrai l’indirizzo preciso -->
+        <iframe
+          class="map-placeholder"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2765.469993702889!2d8.969!3d46.359!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478431c8b5b9d7c5%3A0x0000000000000000!2sBiasca!5e0!3m2!1sit!2sch!4v0000000000000"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATTI + PRENOTAZIONI -->
+  <section id="contact">
+    <div class="container form-grid fade-in">
+      <div>
+        <h2 class="section-title" data-i18n="contact_title">Contatti &amp; Prenotazioni</h2>
+        <div class="section-subtitle" data-i18n="contact_subtitle">
+          Scrivici · Prenota · Organizza
+        </div>
+
+        <form id="contactForm">
+          <div class="field-group">
+            <label for="name" data-i18n="contact_label_name">Nome e cognome</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+
+          <div class="form-row">
+            <div class="field-group">
+              <label for="email" data-i18n="contact_label_email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="field-group">
+              <label for="phone" data-i18n="contact_label_phone">Telefono</label>
+              <input type="tel" id="phone" name="phone" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field-group">
+              <label for="date" data-i18n="contact_label_date">Data</label>
+              <input type="date" id="date" name="date" />
+            </div>
+            <div class="field-group">
+              <label for="time" data-i18n="contact_label_time">Orario</label>
+              <input type="time" id="time" name="time" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="people" data-i18n="contact_label_people">Numero di persone</label>
+            <input type="number" id="people" name="people" min="1" max="50" />
+          </div>
+
+          <div class="field-group">
+            <label for="type" data-i18n="contact_label_type">Tipo di richiesta</label>
+            <select id="type" name="type">
+              <option value="reservation" data-i18n="contact_option_reservation">
+                Prenotazione tavolo
+              </option>
+              <option value="event" data-i18n="contact_option_event">
+                Evento privato / aziendale
+              </option>
+              <option value="info" data-i18n="contact_option_info">
+                Richiesta informazioni
+              </option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="message" data-i18n="contact_label_message">Messaggio</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" data-i18n="contact_submit">
+            Invia richiesta
+          </button>
+          <div id="contactStatus" class="status-message"></div>
+
+          <p class="form-note" data-i18n="contact_note">
+            Le richieste inviate tramite questo form non confermano automaticamente la prenotazione:
+            verrai ricontattato dal nostro staff per una conferma personalizzata.
+          </p>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-title" data-i18n="contact_card_title">
+          Informazioni rapide
+        </div>
+        <div class="card-main">
+          <p class="text-muted" data-i18n="contact_card_text_1">
+            Orari indicativi: 17:00 – 01:00 (feriali), 17:00 – 02:00 (weekend).
+          </p>
+          <br />
+          <p class="text-muted" data-i18n="contact_card_text_2">
+            Per eventi privati, serate aziendali o richieste speciali, ti consigliamo di
+            contattarci con qualche giorno di anticipo, così possiamo costruire un’esperienza
+            su misura per te e i tuoi ospiti.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <span>
+        © <span id="year"></span> <span class="highlight">Pallegrino SA</span>.
+        <span data-i18n="footer_rights">Tutti i diritti riservati.</span>
+      </span>
+      <span data-i18n="footer_made">
+        Sito pensato per trasmettere lusso, status e cura del dettaglio.
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    // Anno dinamico
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Menu mobile
+    const navToggle = document.getElementById("navToggle");
+    const navLinks = document.getElementById("navLinks");
+    navToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+    });
+
+    // Evidenzia link attivo in base allo scroll
+    const sections = document.querySelectorAll("section[id]");
+    const navAnchors = document.querySelectorAll(".nav-links a");
+    window.addEventListener("scroll", () => {
+      let current = "";
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop - 120;
+        if (pageYOffset >= sectionTop) {
+          current = section.getAttribute("id");
+        }
+      });
+      navAnchors.forEach((a) => {
+        a.classList.remove("active");
+        if (a.getAttribute("href") === "#" + current) {
+          a.classList.add("active");
+        }
+      });
+    });
+
+    // Animazioni di entrata
+    const fadeElements = document.querySelectorAll(".fade-in");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    fadeElements.forEach((el) => observer.observe(el));
+
+    // Multilingua
+    const translations = {
+      it: {
+        logo_tagline: "Bar · Cocktail · Lounge",
+        nav_home: "Home",
+        nav_about: "Chi siamo",
+        nav_services: "Servizi",
+        nav_gallery: "Galleria",
+        nav_locations: "Sedi",
+        nav_contact: "Contatti",
+        hero_kicker: "Bar di lusso · Biasca",
+        hero_title_line2: "L’arte del bar contemporaneo",
+        hero_subtitle:
+          "Un bar di fascia alta dove cocktail d’autore, atmosfera elegante e servizio impeccabile creano un’esperienza pensata per chi cerca status, gusto e dettagli di lusso.",
+        hero_badge_1: "Cocktail Signature",
+        hero_badge_2: "Selezione Premium",
+        hero_badge_3: "Ambiente Esclusivo",
+        hero_cta_primary: "Prenota un tavolo",
+        hero_cta_secondary: "Scopri l’atmosfera",
+        hero_note:
+          "Aperto tutti i giorni · Ideale per aperitivi, serate esclusive ed eventi privati.",
+        hero_card_title: "Cocktail d’autore",
+        hero_card_pill: "Pallegrino SA · Lounge",
+        hero_card_footer_1: "Selezione premium · <strong>Champagne &amp; Spirits</strong>",
+        hero_badge_round: "Bar · Lusso",
+        about_title: "Chi siamo",
+        about_subtitle: "Identità · Visione · Esperienza",
+        about_text_1:
+          "Pallegrino SA è un bar di lusso pensato per chi vive il momento come un rituale. Un ambiente moderno, elegante e curato nei minimi dettagli, dove ogni luce, ogni materiale e ogni nota musicale sono studiati per trasmettere status e raffinatezza.",
+        about_text_2:
+          "La nostra filosofia unisce l’arte della mixology contemporanea a un servizio discreto e impeccabile. Che si tratti di un aperitivo, di un incontro di lavoro o di una serata speciale, il nostro obiettivo è uno solo: far sentire ogni ospite al centro di un’esperienza esclusiva.",
+        about_pill_1: "Mixology contemporanea",
+        about_pill_2: "Selezione di champagne",
+        about_pill_3: "Servizio su misura",
+        about_card_title: "Dettagli che fanno la differenza",
+        about_card_text_1:
+          "Materiali pregiati, palette cromatica nero–oro, luci soffuse e una selezione musicale curata creano un ambiente che comunica immediatamente lusso e riservatezza.",
+        about_card_text_2:
+          "Ogni elemento è pensato per valorizzare l’immagine del tuo brand personale: Pallegrino SA è il luogo ideale per incontrare clienti, partner o persone importanti in un contesto che parla di stile, successo e attenzione al dettaglio.",
+        services_title: "Servizi",
+        services_subtitle: "Ospitalità · Esperienza · Personalizzazione",
+        service_1_title: "Cocktail d’autore",
+        service_1_text:
+          "Una carta cocktail firmata dai nostri bartender, con creazioni originali, twist sui grandi classici e pairing studiati con la nostra selezione food.",
+        service_1_tag: "Signature Experience",
+        service_2_title: "Champagne &amp; Spirits",
+        service_2_text:
+          "Etichette selezionate di champagne, distillati premium e bottiglie rare, perfette per celebrazioni, incontri importanti o momenti da ricordare.",
+        service_2_tag: "Premium Selection",
+        service_3_title: "Eventi privati",
+        service_3_text:
+          "Possibilità di riservare aree dedicate o l’intero locale per eventi aziendali, presentazioni, feste private e serate su invito.",
+        service_3_tag: "Private Lounge",
+        gallery_title: "Galleria",
+        gallery_subtitle: "Atmosfera · Dettagli · Momenti",
+        gallery_label_1: "Lounge principale",
+        gallery_label_2: "Cocktail d’autore",
+        gallery_label_3: "Dettagli di luce",
+        gallery_label_4: "Champagne &amp; Spirits",
+        locations_title: "Sedi",
+        locations_subtitle: "Dove trovarci",
+        location_1_name: "Pallegrino SA · Sede principale",
+        location_1_meta: "Biasca, Ticino · Svizzera",
+        location_1_tag: "Flagship Bar",
+        location_2_name: "Pallegrino SA · Lounge Executive",
+        location_2_meta: "Sede dedicata a eventi privati e corporate.",
+        location_2_tag: "Private &amp; Corporate",
+        locations_note:
+          "Per informazioni su nuove aperture o sedi partner, contattaci tramite il form o prenota un appuntamento dedicato.",
+        contact_title: "Contatti &amp; Prenotazioni",
+        contact_subtitle: "Scrivici · Prenota · Organizza",
+        contact_label_name: "Nome e cognome",
+        contact_label_email: "Email",
+        contact_label_phone: "Telefono",
+        contact_label_date: "Data",
+        contact_label_time: "Orario",
+        contact_label_people: "Numero di persone",
+        contact_label_type: "Tipo di richiesta",
+        contact_option_reservation: "Prenotazione tavolo",
+        contact_option_event: "Evento privato / aziendale",
+        contact_option_info: "Richiesta informazioni",
+        contact_label_message: "Messaggio",
+        contact_submit: "Invia richiesta",
+        contact_note:
+          "Le richieste inviate tramite questo form non confermano automaticamente la prenotazione: verrai ricontattato dal nostro staff per una conferma personalizzata.",
+        contact_card_title: "Informazioni rapide",
+        contact_card_text_1:
+          "Orari indicativi: 17:00 – 01:00 (feriali), 17:00 – 02:00 (weekend).",
+        contact_card_text_2:
+          "Per eventi privati, serate aziendali o richieste speciali, ti consigliamo di contattarci con qualche giorno di anticipo, così possiamo costruire un’esperienza su misura per te e i tuoi ospiti.",
+        footer_rights: "Tutti i diritti riservati.",
+        footer_made:
+          "Sito pensato per trasmettere lusso, status e cura del dettaglio."
+      },
+      de: {
+        logo_tagline: "Bar · Cocktails · Lounge",
+        nav_home: "Start",
+        nav_about: "Über uns",
+        nav_services: "Leistungen",
+        nav_gallery: "Galerie",
+        nav_locations: "Standorte",
+        nav_contact: "Kontakt",
+        hero_kicker: "Luxusbar · Biasca",
+        hero_title_line2: "Die Kunst der modernen Bar",
+        hero_subtitle:
+          "Eine High-End-Bar mit Signature-Cocktails, eleganter Atmosphäre und perfektem Service – für Gäste, die Status, Geschmack und Luxus im Detail suchen.",
+        hero_badge_1: "Signature Cocktails",
+        hero_badge_2: "Premium Auswahl",
+        hero_badge_3: "Exklusives Ambiente",
+        hero_cta_primary: "Tisch reservieren",
+        hero_cta_secondary: "Atmosphäre entdecken",
+        hero_note:
+          "Täglich geöffnet · Ideal für Apéros, exklusive Abende und private Events.",
+        hero_card_title: "Signature Cocktails",
+        hero_card_pill: "Pallegrino SA · Lounge",
+        hero_card_footer_1:
+          "Premium Auswahl · <strong>Champagner &amp; Spirits</strong>",
+        hero_badge_round: "Bar · Luxus",
+        about_title: "Über uns",
+        about_subtitle: "Identität · Vision · Erlebnis",
+        about_text_1:
+          "Pallegrino SA ist eine Luxusbar für alle, die den Moment als Ritual erleben. Ein modernes, elegantes Ambiente, in dem Licht, Materialien und Musik sorgfältig aufeinander abgestimmt sind, um Status und Raffinesse zu vermitteln.",
+        about_text_2:
+          "Unsere Philosophie verbindet moderne Mixology mit diskretem, perfektem Service. Ob Apéro, Business-Meeting oder besonderer Abend – unser Ziel ist es, jedem Gast ein exklusives Erlebnis zu bieten.",
+        about_pill_1: "Moderne Mixology",
+        about_pill_2: "Champagner-Auswahl",
+        about_pill_3: "Service nach Maß",
+        about_card_title: "Details, die den Unterschied machen",
+        about_card_text_1:
+          "Edle Materialien, eine Schwarz–Gold-Palette, gedämpftes Licht und kuratierte Musik schaffen ein Ambiente, das sofort Luxus und Diskretion ausstrahlt.",
+        about_card_text_2:
+          "Jedes Element ist darauf ausgelegt, dein persönliches Image zu unterstreichen: Pallegrino SA ist der ideale Ort, um Kunden, Partner oder besondere Menschen in einem Umfeld zu empfangen, das von Stil, Erfolg und Liebe zum Detail spricht.",
+        services_title: "Leistungen",
+        services_subtitle: "Gastfreundschaft · Erlebnis · Personalisierung",
+        service_1_title: "Signature Cocktails",
+        service_1_text:
+          "Eine Cocktailkarte mit Eigenkreationen, modernen Interpretationen von Klassikern und abgestimmten Food-Pairings.",
+        service_1_tag: "Signature Experience",
+        service_2_title: "Champagner &amp; Spirits",
+        service_2_text:
+          "Ausgewählte Champagner, Premium-Spirituosen und seltene Flaschen – perfekt für Feiern, wichtige Treffen oder unvergessliche Momente.",
+        service_2_tag: "Premium Selection",
+        service_3_title: "Private Events",
+        service_3_text:
+          "Möglichkeit, Bereiche oder die gesamte Location für Firmenveranstaltungen, Präsentationen, private Feiern und exklusive Abende zu reservieren.",
+        service_3_tag: "Private Lounge",
+        gallery_title: "Galerie",
+        gallery_subtitle: "Atmosphäre · Details · Momente",
+        gallery_label_1: "Hauptlounge",
+        gallery_label_2: "Signature Cocktails",
+        gallery_label_3: "Lichtdetails",
+        gallery_label_4: "Champagner &amp; Spirits",
+        locations_title: "Standorte",
+        locations_subtitle: "Wo Sie uns finden",
+        location_1_name: "Pallegrino SA · Hauptstandort",
+        location_1_meta: "Biasca, Tessin · Schweiz",
+        location_1_tag: "Flagship Bar",
+        location_2_name: "Pallegrino SA · Executive Lounge",
+        location_2_meta:
+          "Standort für private und Corporate-Events.",
+        location_2_tag: "Private &amp; Corporate",
+        locations_note:
+          "Für Informationen zu neuen Standorten oder Partner-Locations kontaktieren Sie uns über das Formular oder vereinbaren Sie einen Termin.",
+        contact_title: "Kontakt &amp; Reservationen",
+        contact_subtitle: "Schreiben · Reservieren · Planen",
+        contact_label_name: "Name und Nachname",
+        contact_label_email: "E-Mail",
+        contact_label_phone: "Telefon",
+        contact_label_date: "Datum",
+        contact_label_time: "Uhrzeit",
+        contact_label_people: "Anzahl Personen",
+        contact_label_type: "Art der Anfrage",
+        contact_option_reservation: "Tischreservation",
+        contact_option_event: "Privat- / Firmenevent",
+        contact_option_info: "Informationsanfrage",
+        contact_label_message: "Nachricht",
+        contact_submit: "Anfrage senden",
+        contact_note:
+          "Anfragen über dieses Formular bestätigen die Reservation nicht automatisch: Unser Team meldet sich zur persönlichen Bestätigung.",
+        contact_card_title: "Schnelle Infos",
+        contact_card_text_1:
+          "Richtzeiten: 17:00 – 01:00 (werktags), 17:00 – 02:00 (Wochenende).",
+        contact_card_text_2:
+          "Für private Events, Firmenabende oder spezielle Wünsche empfehlen wir, uns einige Tage im Voraus zu kontaktieren, damit wir ein maßgeschneidertes Erlebnis gestalten können.",
+        footer_rights: "Alle Rechte vorbehalten.",
+        footer_made:
+          "Website, die Luxus, Status und Liebe zum Detail vermittelt."
+      },
+      fr: {
+        logo_tagline: "Bar · Cocktails · Lounge",
+        nav_home: "Accueil",
+        nav_about: "À propos",
+        nav_services: "Services",
+        nav_gallery: "Galerie",
+        nav_locations: "Adresses",
+        nav_contact: "Contact",
+        hero_kicker: "Bar de luxe · Biasca",
+        hero_title_line2: "L’art du bar contemporain",
+        hero_subtitle:
+          "Un bar haut de gamme où cocktails signature, atmosphère élégante et service impeccable créent une expérience pensée pour ceux qui recherchent statut, goût et luxe dans chaque détail.",
+        hero_badge_1: "Cocktails Signature",
+        hero_badge_2: "Sélection Premium",
+        hero_badge_3: "Ambiance Exclusive",
+        hero_cta_primary: "Réserver une table",
+        hero_cta_secondary: "Découvrir l’ambiance",
+        hero_note:
+          "Ouvert tous les jours · Idéal pour apéritifs, soirées exclusives et événements privés.",
+        hero_card_title: "Cocktails signature",
+        hero_card_pill: "Pallegrino SA · Lounge",
+        hero_card_footer_1:
+          "Sélection premium · <strong>Champagne &amp; Spirits</strong>",
+        hero_badge_round: "Bar · Luxe",
+        about_title: "À propos",
+        about_subtitle: "Identité · Vision · Expérience",
+        about_text_1:
+          "Pallegrino SA est un bar de luxe conçu pour ceux qui vivent chaque moment comme un rituel. Un cadre moderne, élégant et soigné dans les moindres détails, où lumière, matériaux et musique sont pensés pour transmettre statut et raffinement.",
+        about_text_2:
+          "Notre philosophie associe l’art de la mixologie contemporaine à un service discret et irréprochable. Qu’il s’agisse d’un apéritif, d’un rendez-vous professionnel ou d’une soirée spéciale, notre objectif est d’offrir à chaque invité une expérience exclusive.",
+        about_pill_1: "Mixologie contemporaine",
+        about_pill_2: "Sélection de champagne",
+        about_pill_3: "Service sur mesure",
+        about_card_title: "Des détails qui font la différence",
+        about_card_text_1:
+          "Matériaux nobles, palette noir–or, lumières tamisées et sélection musicale soignée créent une ambiance qui évoque immédiatement luxe et discrétion.",
+        about_card_text_2:
+          "Chaque élément est pensé pour valoriser ton image personnelle : Pallegrino SA est le lieu idéal pour recevoir clients, partenaires ou personnes importantes dans un cadre qui parle de style, de réussite et d’attention au détail.",
+        services_title: "Services",
+        services_subtitle: "Hospitalité · Expérience · Personnalisation",
+        service_1_title: "Cocktails signature",
+        service_1_text:
+          "Une carte de cocktails signés par nos bartenders, avec créations originales, revisites de classiques et accords pensés avec notre sélection food.",
+        service_1_tag: "Signature Experience",
+        service_2_title: "Champagne &amp; Spirits",
+        service_2_text:
+          "Sélection de champagnes, spiritueux premium et bouteilles rares – parfaits pour célébrations, rendez-vous importants ou moments inoubliables.",
+        service_2_tag: "Premium Selection",
+        service_3_title: "Événements privés",
+        service_3_text:
+          "Possibilité de réserver des espaces dédiés ou l’ensemble du lieu pour événements d’entreprise, présentations, fêtes privées et soirées sur invitation.",
+        service_3_tag: "Private Lounge",
+        gallery_title: "Galerie",
+        gallery_subtitle: "Ambiance · Détails · Moments",
+        gallery_label_1: "Lounge principale",
+        gallery_label_2: "Cocktails signature",
+        gallery_label_3: "Jeux de lumière",
+        gallery_label_4: "Champagne &amp; Spirits",
+        locations_title: "Adresses",
+        locations_subtitle: "Où nous trouver",
+        location_1_name: "Pallegrino SA · Adresse principale",
+        location_1_meta: "Biasca, Tessin · Suisse",
+        location_1_tag: "Flagship Bar",
+        location_2_name: "Pallegrino SA · Lounge Executive",
+        location_2_meta:
+          "Adresse dédiée aux événements privés et corporate.",
+        location_2_tag: "Private &amp; Corporate",
+        locations_note:
+          "Pour toute information sur de nouvelles ouvertures ou adresses partenaires, contacte-nous via le formulaire ou réserve un rendez-vous dédié.",
+        contact_title: "Contact &amp; Réservations",
+        contact_subtitle: "Écrire · Réserver · Organiser",
+        contact_label_name: "Nom et prénom",
+        contact_label_email: "E-mail",
+        contact_label_phone: "Téléphone",
+        contact_label_date: "Date",
+        contact_label_time: "Heure",
+        contact_label_people: "Nombre de personnes",
+        contact_label_type: "Type de demande",
+        contact_option_reservation: "Réservation de table",
+        contact_option_event: "Événement privé / entreprise",
+        contact_option_info: "Demande d’information",
+        contact_label_message: "Message",
+        contact_submit: "Envoyer la demande",
+        contact_note:
+          "Les demandes envoyées via ce formulaire ne confirment pas automatiquement la réservation : notre équipe te recontactera pour une confirmation personnalisée.",
+        contact_card_title: "Infos rapides",
+        contact_card_text_1:
+          "Horaires indicatifs : 17h00 – 01h00 (semaine), 17h00 – 02h00 (week-end).",
+        contact_card_text_2:
+          "Pour les événements privés, soirées d’entreprise ou demandes spéciales, nous te conseillons de nous contacter quelques jours à l’avance afin de créer une expérience sur mesure.",
+        footer_rights: "Tous droits réservés.",
+        footer_made:
+          "Site conçu pour transmettre luxe, statut et soin du détail."
+      }
+    };
+
+    function setLanguage(lang) {
+      const dict = translations[lang];
+      if (!dict) return;
+
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key] !== undefined) {
+          el.innerHTML = dict[key];
+        }
+      });
+
+      document.querySelectorAll(".lang-switcher button").forEach((btn) => {
+        btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+      });
+    }
+
+    document.querySelectorAll(".lang-switcher button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lang = btn.getAttribute("data-lang");
+        setLanguage(lang);
+      });
+    });
+
+    // Imposta lingua iniziale
+    setLanguage("it");
+
+    // Form contatti (simulazione invio)
+    const contactForm = document.getElementById("contactForm");
+    const contactStatus = document.getElementById("contactStatus");
+
+    contactForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      contactStatus.textContent = "";
+      contactStatus.className = "status-message";
+
+      setTimeout(() => {
+        contactStatus.textContent =
+          "Richiesta inviata. Verrai ricontattato dal nostro staff per la conferma.";
+        contactStatus.classList.add("status-success");
+        contactForm.reset();
+      }, 600);
+    });
+  </script>
+</body>
+</html>
